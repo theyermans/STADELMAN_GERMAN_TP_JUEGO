@@ -1,5 +1,10 @@
+from typing import Self
 from game import Game
 
 
+
 if __name__ == '__main__':
-    Game.run_stage('stage_2')
+    
+    Game.start(Self)
+    
+    
