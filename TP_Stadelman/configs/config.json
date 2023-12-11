@@ -1,0 +1,204 @@
+{
+    "stage_1": {
+        "game_duration": 60,
+        "damage_bulet_p": 25,
+        "gravity_speed": 500,
+        "suma_bat_score": 10,
+        "max_enemies":4,
+        "spawn_timer": 1000,
+        "spawn_timer_min": 0,
+        "spawn_timer_max": 2500,
+        "hp_enemy":50,
+        
+        "platforms_data": [
+            {"left": 0, "top": 650, "width": 1280, "height": 100, "image_path": "assets/Tile (2).png"},
+            {"left": 400, "top": 500, "width": 468, "height": 18, "image_path": "assets/tile_0000.png"},
+            {"left": 0, "top": 500, "width": 180, "height": 18, "image_path": "assets/tile_0000.png"},
+            {"left": 1100, "top": 500, "width": 180, "height": 18, "image_path": "assets/tile_0000.png"},
+            {"left": 250, "top": 350, "width": 792, "height": 18, "image_path": "assets/tile_0000.png"}
+        ],
+
+
+        "enemy": {
+            "enemy_img": "./assets/graphics/{0}.png",
+            "max_enemy_speed": 55,
+            "min_enemy_speed": 10,
+            "percentaje_shoot": 100,
+            "shoot_cooldown": 1000,
+            "speed_enemy": 250
+        },
+        "enemy_pos": {
+            "pos1_x": 500,
+            "pos1_y": 250,
+            "pos2_x": 50,
+            "pos2_y": 200,
+            "pos3_x": -500,
+            "pos3_y": 450
+        },
+        "enemy_class": 50,
+
+    
+        "player": {
+            "player_img": {
+            "idleRight": "./assets/Player/Idle (32x32).png",
+            "idleLeft": "./assets/Player/Idle (32x32).png",
+            "runningRight": "./assets/Player/Run (32x32).png",
+            "runningLeft": "./assets/Player/Run (32x32).png",
+            "playerDamagedIfRight": "assets/Player/Hit (32x32).png",
+            "playerDamagedIfLeft": "assets/Player/Hit (32x32).png",
+            "up": "assets/Bullet/On (38x38).png"
+        },"gravity_speed": 300
+        },
+        "stage": {
+            "max_amount_enemies": 3,
+            "coords_enemies": [
+                {
+                    "coord_x": 50,
+                    "coord_y": 150
+                },
+                {
+                    "coord_x": 200,
+                    "coord_y": 80
+                },
+                {
+                    "coord_x": 400,
+                    "coord_y": 20
+                }
+            ]
+        }
+    },
+    "stage_2": {"game_duration": 30,
+    "damage_bulet_p": 25,
+    "gravity_speed": 500,
+    "suma_bat_score": 50,
+    "max_enemies":20,
+    "spawn_timer": 250,
+    "spawn_timer_min": 1500,
+    "spawn_timer_max": 1600,
+    "hp_enemy":1,
+    
+    "platforms_data": [
+        {"left": 0, "top": 650, "width": 1280, "height": 100, "image_path": "assets/Tile (2).png"},
+        {"left": 300, "top": 500, "width": 100, "height": 18, "image_path": "assets/tile_0000.png"},
+        {"left": 750, "top": 500, "width": 50, "height": 18, "image_path": "assets/tile_0000.png"},
+        {"left": 900, "top": 350, "width": 50, "height": 18, "image_path": "assets/tile_0000.png"},
+        {"left": 100, "top": 350, "width": 100, "height": 18, "image_path": "assets/tile_0000.png"}
+    ],
+
+
+    "enemy": {
+        "enemy_img": "./assets/graphics/{0}.png",
+        "max_enemy_speed": 55,
+        "min_enemy_speed": 10,
+        "percentaje_shoot": 100,
+        "shoot_cooldown": 1000,
+        "speed_enemy": 250
+    },
+    "enemy_pos": {
+        "pos1_x": 500,
+        "pos1_y": 250,
+        "pos2_x": 50,
+        "pos2_y": 200,
+        "pos3_x": -500,
+        "pos3_y": 450
+    },
+    "enemy_class": 50,
+
+
+    "player": {
+        "player_img": {
+        "idleRight": "./assets/Player/Idle (32x32).png",
+        "idleLeft": "./assets/Player/Idle (32x32).png",
+        "runningRight": "./assets/Player/Run (32x32).png",
+        "runningLeft": "./assets/Player/Run (32x32).png",
+        "playerDamagedIfRight": "assets/Player/Hit (32x32).png",
+        "playerDamagedIfLeft": "assets/Player/Hit (32x32).png",
+        "up": "assets/Bullet/On (38x38).png"
+    },"gravity_speed": 300
+    },
+    "stage": {
+        "max_amount_enemies": 3,
+        "coords_enemies": [
+            {
+                "coord_x": 50,
+                "coord_y": 150
+            },
+            {
+                "coord_x": 200,
+                "coord_y": 80
+            },
+            {
+                "coord_x": 400,
+                "coord_y": 20
+            }
+        ]
+    }
+},
+"stage_3": {"game_duration": 100,
+"damage_bulet_p": 1,
+"gravity_speed": 500,
+"suma_bat_score": 600,
+"max_enemies":1,
+"spawn_timer": 1,
+"spawn_timer_min": 1500,
+"spawn_timer_max": 1600,
+"hp_enemy":1,
+
+"platforms_data": [
+    {"left": 0, "top": 650, "width": 1280, "height": 100, "image_path": "assets/Tile (2).png"},
+    {"left": 300, "top": 600, "width": 100, "height": 18, "image_path": "assets/tile_0000.png"},
+    {"left": 550, "top": 600, "width": 50, "height": 18, "image_path": "assets/tile_0000.png"},
+    {"left": 900, "top": 600, "width": 50, "height": 18, "image_path": "assets/tile_0000.png"},
+    {"left": 0, "top": 330, "width": 1280, "height": 18, "image_path": "assets/tile_0000.png"}
+],
+
+
+"enemy": {
+    "enemy_img": "./assets/graphics/{0}.png",
+    "max_enemy_speed": 100,
+    "min_enemy_speed": 20,
+    "percentaje_shoot": 50,
+    "shoot_cooldown": 500,
+    "speed_enemy": 500
+},
+"enemy_pos": {
+    "pos1_x": 500,
+    "pos1_y": 250,
+    "pos2_x": 50,
+    "pos2_y": 200,
+    "pos3_x": -500,
+    "pos3_y": 450
+},
+"enemy_class": 50,
+
+
+"player": {
+    "player_img": {
+    "idleRight": "./assets/Player/Idle (32x32).png",
+    "idleLeft": "./assets/Player/Idle (32x32).png",
+    "runningRight": "./assets/Player/Run (32x32).png",
+    "runningLeft": "./assets/Player/Run (32x32).png",
+    "playerDamagedIfRight": "assets/Player/Hit (32x32).png",
+    "playerDamagedIfLeft": "assets/Player/Hit (32x32).png",
+    "up": "assets/Bullet/On (38x38).png"
+},"gravity_speed": 300
+},
+"stage": {
+    "max_amount_enemies": 1,
+    "coords_enemies": [
+        {
+            "coord_x": 50,
+            "coord_y": 150
+        },
+        {
+            "coord_x": 200,
+            "coord_y": 80
+        },
+        {
+            "coord_x": 400,
+            "coord_y": 20
+        }
+    ]
+}
+}
+}
