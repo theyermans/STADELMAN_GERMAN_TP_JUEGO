@@ -116,7 +116,7 @@ class TablaPuntajes:
         self.score_str = str(self.score)
         self.score_str = f"{self.score:06}"
         self.score_txt = self.font.render(self.score_str, True, self.color_texto, None)
-        ###Guido aca necesito o mejor dicho quiero pasarle por parametro x y de poscicion el self.my_surface_rect.centex por ejemplo
+        
         self.score_rect.topright = (self.screen.get_width() - 150, 10)
 
         self.screen.blit(self.score_txt, self.score_rect)

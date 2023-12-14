@@ -1,25 +1,25 @@
 import pygame
 import sys
 from pygame.locals import *
-from GUI_form_prueba import FormPrueba
+from GUI_form_stages import Stages
 
-pygame.init()
-WIDTH = 1200
-HEIGHT = 600
-FPS = 60
+# pygame.init()
+# WIDTH = 1200
+# HEIGHT = 600
+# FPS = 60
 
-reloj = pygame.time.Clock()
-pantalla = pygame.display.set_mode((WIDTH, HEIGHT))
-
-
-form_prueba = FormPrueba(pantalla,200,100, 900, 350,"black", "yellow", 5, True)
+# reloj = pygame.time.Clock()
+# pantalla = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
-while True:
+# form_prueba = Stages(pantalla,200,100, 900, 350,"black", "yellow", 5, True)
+
+
+# while True:
     
 
-    pantalla.fill("Black")
+#     pantalla.fill("Black")
     
-    form_prueba.update(eventos)
+#     form_prueba.update(eventos)
     
-    pygame.display.flip()
+#     pygame.display.flip()

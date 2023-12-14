@@ -1,5 +1,5 @@
 
-from GUI.GUI_form_menu_score import FormMenuScore
+
 
 
 
@@ -9,7 +9,7 @@ class Estadisticas:
         self.estadisticas_jugadores = {}
     """bueno empecemos a meter daatos estadisicos
     el nombre quiero que venga desde el menu GUI en un menu start
-    #
+    
     """
     def agregar_puntuacion(self, score):
         if "score" not in self.estadisticas_jugadores:

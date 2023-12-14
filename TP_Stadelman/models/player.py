@@ -195,13 +195,7 @@ class Player(pg.sprite.Sprite):
             self.damage_cooldown_elapsed_time = self.damage_cooldown
             self.state_damage = False
     def update_frame(self, delta_ms):
-        """
-        The function updates the frame of an animation, adjusts the position of a character, and updates
-        the hitboxes accordingly.
-        
-        :param delta_ms: delta_ms is the time in milliseconds that has passed since the last frame
-        update. It is used to keep track of the elapsed time for each frame
-        """
+       
         self.frame_elapsed_time -= delta_ms
         if(self.frame_elapsed_time <= 0):
             self.frame_elapsed_time = self.frame_duration_ms

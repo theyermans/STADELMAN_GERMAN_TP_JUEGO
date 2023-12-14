@@ -1,15 +1,16 @@
-import time 
-import random
 import pygame
 import pygame.font
+
+import time 
+import random
 
 
 from items import Items
 from auxiliares import TablaPuntajes
 from estadisticas import Estadisticas 
-from platforms import Platform
+from platforms import Platform, Tramp
 from player import Player
-from constantes import FONT_GLOBAL, GRAVITY,CONFIG_FILE_PATH, ConfigManager
+from constantes import FONT_GLOBAL, GRAVITY,CONFIG_FILE_PATH, ConfigManager, Music_Controller
 from gergoomba import Gergoomba,Boss
 
 
@@ -22,17 +23,17 @@ from gergoomba import Gergoomba,Boss
 class Stage:
     def __init__(self, screen: pygame.surface.Surface, limit_w, limit_h,game_instance, stage_name="stage_1"):
         
-        
-        
-        
         # Jugador
         self.__configs = ConfigManager.load_configs(self,CONFIG_FILE_PATH)
         # print(self.__configs)
         self.configs_stage = self.__configs.get(stage_name,"stage_1")
         
         self.stage_name = stage_name
-        self.game_instance:object() = game_instance
+        self.game_instance:object = game_instance
         self.gravity_speed = self.configs_stage.get("gravity_speed", 300)
+        self.damage_blade = self.configs_stage.get("damage_bulet_p", 25)
+        self.platforms_data = self.configs_stage.get("platforms_data", [])
+        self.game_duration = self.configs_stage.get("game_duration", 60)  # Set the game duration in seconds
         # Game timer variables
         self.game_start_time = time.time()   
         #pantalla
@@ -50,15 +51,19 @@ class Stage:
         self.items: pygame.sprite.Group() = pygame.sprite.Group()
         self.items.add(Items(50, 100, "coin"))
         #self.items.add(Items(350,450,"heart"))
-        self.plataformas = []
-        self.pos_enemy_bat = {}
         #plataformas
-        self.damage_blade = self.configs_stage.get("damage_bulet_p", 25)
-        self.platforms_data = self.configs_stage.get("platforms_data", [])
+        self.plataformas = []
+        # Crear una instancia de la plataforma
         for data in self.platforms_data:
             rect = pygame.Rect(data["left"], data["top"], data["width"], data["height"])
             self.plataformas.append(Platform(rect, data["image_path"]))
-        self.game_duration = self.configs_stage.get("game_duration", 60)  # Set the game duration in seconds
+        tramp_rect = pygame.Rect(250, 600, 50, 32)  # Ajusta la posición y dimensiones según tu escenario
+        #"left": 0, "top": 650, "width": 1280, "height": 100
+        time_per_state = 1000  # Ajusta el tiempo entre estados según sea necesario
+        self.tramp_platform = Tramp(tramp_rect, time_per_state)
+        
+        self.pos_enemy_bat = {}
+        pygame.font.init()
         self.timer_font = pygame.font.SysFont(FONT_GLOBAL, 48)  # Choose a font and size for the timer        
         #estadisticas        
         self.score:int = 0
@@ -150,6 +155,9 @@ class Stage:
             #new_enemy = Gergoomba(pygame.Vector2(pos_x, pos_y), pygame.Vector2(self.__limit_w, self.__limit_h),self.stage_name, pygame.Vector2(direction, 0))
             new_enemy.shoot_timer = random.randint(1000, 3000)  # Configura el temporizador aqu
             self.enemies.add(new_enemy)
+    def play_background_music(self):
+        # Asegúrate de tener una instancia de Music_Controller creada
+        Music_Controller.play_background_music(self.volumen)
     def status_hp_player(self,screen,x,y,hp)  :
         heart_image_path = "assets/Player/hi_overlay_variant_hearts_x1_1_png_1354840444.png"
         heart_image = pygame.transform.scale2x(pygame.image.load(heart_image_path))
@@ -175,10 +183,12 @@ class Stage:
             for bullet in bullets_hit:
                 # Deduct life points from the specific enemy hit by the bullet
                 enemy.hp_enemy -= self.damage_blade
+                Music_Controller.play_collision_sound()
                 if enemy.hp_enemy <= 0:
                     enemy.kill()#este es un magico de sprite
                     self.contador_bat_kill += 1
                     self.score += self.suma_bat_score
+                    
                     
     def handle_bullet_player_boss_collisions(self):
         """Controla colisiones entre las balas del jugador y el boss"""
@@ -205,15 +215,25 @@ class Stage:
         p:Platform
         for p in self.plataformas:
             p.draw(self.main_screen)
+        # Colisiones entre el jugador y la plataforma
+        if self.stage_name == "stage_2":
+            colision_player_platform = pygame.sprite.spritecollide(self.player, [self.tramp_platform], False)
+            if colision_player_platform:            
+                self.player.receive_damage()   
+            # Actualizar y dibujar la plataforma
             
+            self.tramp_platform.update(self.main_screen,delta_ms)
+            self.tramp_platform.draw(self.main_screen,delta_ms)    
         #player
         self.player.update(delta_ms, self.plataformas)
         colisiones_player_bat_bullet = pygame.sprite.groupcollide(self.player_group, self.bullet_bat_group, False, True)
-        #pierdo vida con las balas de tipo enemigo
-        if colisiones_player_bat_bullet:
-            for jojo, b_bat_hit in colisiones_player_bat_bullet.items():
-                for b_bat in b_bat_hit:
-                    self.player.receive_damage()
+        if self.stage_name == "stage_2":
+           
+            if colisiones_player_bat_bullet:
+                for jojo, b_bat_hit in colisiones_player_bat_bullet.items():
+                    for b_bat in b_bat_hit:
+                        self.player.receive_damage()
+        
                     
                     
         pygame.draw.rect(self.main_screen, (255, 0, 0), self.player.rect, 2)            
@@ -261,11 +281,11 @@ class Stage:
             if self.spawn_timer <= 0 and len(self.enemies) < self.max_enemies:
                         self.spawn_left_enemy_bat(delta_ms)
                         self.spawn_timer = random.randint(self.spawn_timer_min, self.spawn_timer_max)
-                        
+        
                         
         # Calculate remaining game time
         elapsed_time = time.time() - self.game_start_time
-        
+       
         remaining_time = max(0, self.game_duration - elapsed_time + time_paused)
         #finish and return menu
         if remaining_time <= 0:
@@ -287,6 +307,7 @@ class Stage:
         self.status_hp_player(self.main_screen, self.my_surface_rect.x-100, self.my_surface_rect.top-100, self.player.player_hp)
         self.main_screen.get_rect()
         self.tabla.muestra_score(self.score)
-       
+        
+        
         
         

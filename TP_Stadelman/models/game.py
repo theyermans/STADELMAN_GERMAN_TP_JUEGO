@@ -2,10 +2,12 @@ import time
 import pygame
 import sys
 import button
+from GUI.GUI_form_start_app import StartApp
+from GUI.GUI_form_stages import Stages
 from stopwatch import Stopwatch
 from stage import Stage
 from constantes import (FPS, screen_h, screen_w)
-from GUI.GUI_form_prueba import FormPrueba
+#from GUI.GUI_form_stages import Stages
 from estadisticas import Estadisticas
 
 
@@ -22,40 +24,49 @@ class Game:
         
         self.stage = None
     def start(self):
+        pygame.init()
         stage_seleccionado = ""
         screen = pygame.display.set_mode((screen_w, screen_h))
         clock = pygame.time.Clock()
-        back_img = pygame.image.load("assets/recopilado/sky.png")
+        back_img = pygame.image.load("Recursos/game_background_2.png")
         back_img = pygame.transform.scale(back_img, (screen_w, screen_h))
-        form_prueba = FormPrueba(screen,200,100,900,350,(0, 0, 0),"red",5,True)
-        eventos = pygame.event.get()
+        #cambiar por StartApp
+        start_app = StartApp(screen,(screen_w/2) - (screen_w/4) ,(screen_h/2) - (screen_h/4),screen_w/2,screen_h/2,None,"red",5,True)
+        
         nombre_stage = ""
         estadisticas = Estadisticas()
-        # # Suponiendo que tu clase Game tiene un método start y se llama game_instance
-        # game_instance = Game()  # Crea una instancia de tu clase Game
-        # stage_instance = Stage(screen, limit_w, limit_h, game_instance, stage_name="stage_1")
-        # Crear una instancia de la clase Game
+       
         game_instance = Game()
         # Crear una instancia de la clase Stage con la instancia de Game como argumento
-        stage_instance = Stage(screen, screen_w, screen_h, game_instance, stage_name="stage_1")
+        stage_instance = Stage(screen, (screen_w/2) - (screen_w/4) , (screen_h/2) - (screen_h/4), game_instance, stage_name="stage_1")
+        lista_niveles=["stage_1", "stage_2", "stage_3"]
 
-        while stage_seleccionado == "":
+        while stage_seleccionado not in lista_niveles:
+        #hile stage_seleccionado != "stage_1":
             clock.tick(FPS)
             eventos = pygame.event.get()
             for event in eventos:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                    
             screen.blit(back_img, back_img.get_rect())
-            # Obtener el texto ingresado en el cuadro de texto
-            texto_ingresado = form_prueba.txt_nombre.get_text()
-
-            stage_seleccionado = form_prueba.update(eventos)
+            stage_seleccionado = start_app.update(eventos)
+            #print(eventos)
+            if stage_seleccionado != "":
+                print("Hola")
+            
             pygame.display.flip()
+    
+            #screen.blit(back_img, back_img.get_rect())
+            # Obtener el texto ingresado en el cuadro de texto
+            #texto_ingresado = start_app.txt_nombre.get_text()
+            #aca tengo que ciclar los eventos
+            #stage_seleccionado = Stages.update(eventos)
+            #pygame.display.flip()
             
            
-            #print(estadisticas_actualizadas)
+            
+        
         Game.run_stage(stage_seleccionado)  
          
            
@@ -91,13 +102,13 @@ class Game:
         back_img_menu = pygame.image.load('assets/images_menu/button_back.png').convert_alpha()
     
         # Create button instances
-        resume_button = button.Button(500, 150, resume_img, 1,)
-        options_button = button.Button(495, 250, options_img, 1)
-        quit_button = button.Button(520, 350, quit_img, 1)
-        video_button = button.Button(226, 75, video_img, 1)
-        audio_button = button.Button(225, 200, audio_img, 1)
-        keys_button = button.Button(246, 325, keys_img, 1)
-        back_button = button.Button(332, 450, back_img_menu, 1)
+        resume_button = button.Button(screen_h/2+150, 150, resume_img, 1,)
+        options_button = button.Button(screen_h/2+150, 250, options_img, 1)
+        quit_button = button.Button(screen_h/2+150, 350, quit_img, 1)
+        video_button = button.Button(screen_h/2+150, 75, video_img, 1)
+        audio_button = button.Button(screen_h/2+150, 200, audio_img, 1)
+        keys_button = button.Button(screen_h/2+150, 325, keys_img, 1)
+        back_button = button.Button(screen_h/+150, 450, back_img_menu, 1)
 
         
         running = True
@@ -119,7 +130,7 @@ class Game:
             
             if game_paused:
                 stopwatch.start()
-                print(stopwatch)
+                #print(stopwatch)
                 # Verificar el estado del menú
                 screen_menu.fill((52, 78, 91))
                 if menu_state == "main":
@@ -145,7 +156,7 @@ class Game:
                         print("Change Key Bindings")
                     if back_button.draw(screen):
                         menu_state = "main"
-                print(stopwatch.duration) 
+                #print(stopwatch.duration) 
                 
                 
             else:
